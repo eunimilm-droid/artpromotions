@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Artwork Showcase</title>
-
     <script src="/_sdk/element_sdk.js"></script>
 
     <style>
@@ -283,7 +282,7 @@ textarea {resize: vertical;min-height: 150px;}
         <div class="container">
             <h2 id="contact-heading">Get In Touch</h2>
 
-            <form class="contact-form" id="contact-form">
+            <form class="contact-form" id="contactForm">
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text" id="name" name="name" required>
@@ -307,6 +306,7 @@ textarea {resize: vertical;min-height: 150px;}
             </form>
         </div>
     </section>
+	
 
 </div>
 
@@ -316,7 +316,33 @@ textarea {resize: vertical;min-height: 150px;}
         <p class="contact-text" id="contactText">eunimilm@gmail.com | +64 9657310204</p>
     </div>
 </footer>
+<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script>
+  (function() {
+    emailjs.init("m5SJXzeZZLdZCC2ss");
 
+    document.getElementById("contactForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const formData = {
+        name: this.name.value,
+        email: this.email.value,
+        message: this.message.value,
+        company: "University of Rizal System"
+      };
+
+      emailjs.send("service_7lwcg4o", "template_y9lm1yi", formData)
+        .then(() => {
+          alert("Your message has been sent!");
+          this.reset();
+        })
+        .catch((error) => {
+          console.error("EmailJS error:", error);
+          alert("Failed to send message. Check console for details.");
+        });
+    });
+  })();
+</script>
 <script>
 const totalArtworks = 57;
 const initialVisible = 8;
@@ -405,7 +431,5 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 </script>
-
-
 </body>
 </html>
