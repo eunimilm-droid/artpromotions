@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artwork Showcase</title>
+
+    <script src="/_sdk/element_sdk.js"></script>
+
+    <style>
+/* Booty */
+body {box-sizing: border-box;margin: 0;padding: 0;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;color: #043915;}
+* { box-sizing: border-box; }
+.container {max-width: 1200px;margin: 0 auto;padding: 0 24px;}
+.page-wrapper {width: 100%;min-height: 100%;background: #FAFAFA;overflow-x: hidden;}
+
+/* Header */
+.header {padding: 60px 40px;text-align: center;background: #FFFFFF;}
+.artist-name {font-size: 14px;letter-spacing: 3px;text-transform: uppercase;color: #043915;margin: 0 0 16px 0;font-weight: 400;}
+.gallery-title {font-size: 48px;font-weight: 300;color: #043915;margin: 0 0 20px 0;line-height: 1.2;}
+.tagline {font-size: 18px;color: #043915;margin: 0;font-weight: 300;}
+
+/* Gallery */
+.gallery-grid {display: grid;grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));gap: 2px;padding: 0;background: #FAFAFA;}
+.artwork-card {position: relative;aspect-ratio: 1;overflow: hidden;background: #e6f4ea;cursor: pointer;border-radius: 12px;transition: transform 0.3s ease, box-shadow 0.3s ease;}
+.artwork-card:hover {transform: translateY(-5px);box-shadow: 0 8px 20px rgba(0,0,0,0.15);}
+
+/* CTA Section */
+.cta-section {padding: 80px 40px;text-align: center;background: #FFFFFF;}
+.cta-button {display: inline-block;padding: 16px 48px;background: #043915;color: #ffffff;text-decoration: none;font-size: 14px;letter-spacing: 2px;text-transform: uppercase;border: none;border-radius: 8px;cursor: pointer;transition: background 0.3s ease, transform 0.2s ease;font-weight: 400;}
+.cta-button:hover {background: #4C763B;transform: translateY(-2px);}
+
+/* Mobile */
+@media (max-width: 768px) {.header { padding: 40px 24px; }
+.gallery-title { font-size: 32px; }
+.tagline { font-size: 16px; }
+.gallery-grid {grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));}
+.cta-section { padding: 60px 24px; }}
+
+/* ----------- PRICING SECTION ----------- */
+#pricing {background: #f8f8f8;padding: 60px 0 80px 0;}
+#pricing h2 {text-align: center;font-size: 32px;font-weight: 400;margin-bottom: 40px;color: #043915;}
+.pricing-table-wrapper {overflow-x: auto;display: flex;justify-content: center;}
+.pricing-table {width: 100%;max-width: 1100px;border-collapse: collapse;background: #043915;color: #ffffff;border-radius: 12px;overflow: hidden;}
+.pricing-table th {padding: 1.5rem 1rem;text-align: left;font-weight: 400;font-size: 1.125rem;border-right: 1px solid #4C763B;background: #043915;color: #ffffff;}
+.pricing-table th:last-child { border-right: none; }
+.pricing-table td {padding: 1.25rem 1rem;border-bottom: 1px solid #4C763B;border-right: 1px solid #4C763B;font-size: 1rem;background: #ffffff;color: #043915;}
+.pricing-table td:last-child { border-right: none; }
+.pricing-table tr:last-child td { border-bottom: none; }
+
+/* ----------- CONTACT SECTION ----------- */
+#contact {padding: 60px 0 80px 0;background: #ffffff;}
+#contact h2 {text-align: center;font-size: 32px;font-weight: 400;margin-bottom: 40px;color: #043915;}
+.contact-form {max-width: 600px;margin: 0 auto;}
+.form-group { margin-bottom: 1.5rem; }
+label {display: block;margin-bottom: 0.5rem;font-size: 0.875rem;font-weight: 400;color: #043915;}
+input, textarea {width: 100%;padding: 0.875rem;border: 1px solid #4C763B;background: #f8fff8;font-family: inherit;font-size: 1rem;transition: border-color 0.2s, box-shadow 0.2s;}
+input:focus, textarea:focus {outline: none;border-color: #043915;box-shadow: 0 0 8px rgba(4,57,21,0.2);}
+textarea {resize: vertical;min-height: 150px;}
+.submit-btn {width: 100%;padding: 1rem;background: #043915;color: #ffffff;border: none;font-size: 1rem;font-weight: 400;cursor: pointer;border-radius: 6px;transition: background 0.2s, transform 0.2s;}
+.submit-btn:hover {background: #4C763B;transform: translateY(-2px);}
+.success-message {display: none;padding: 1rem;background: #043915;color: #ffffff;text-align: center;margin-top: 1rem;}
+.contact-text {font-size: 14px;color: #043915;margin: 0;line-height: 1.6;}
+
+/* Foot Foot */
+.footer {padding: 60px 40px;text-align: center;background: #FAFAFA;border-top: 1px solid #E5E5E5;color: #043915;}
+</style>
+    <style>@view-transition { navigation: auto; }</style>
+    <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+    <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+</head>
+
+<body>
+<div class="page-wrapper">
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <p class="artist-name" id="artistName">EUNI_ART</p>
+            <h1 class="gallery-title" id="galleryTitle">Contemporary Art Collection</h1>
+            <p class="tagline" id="tagline">“Your gateway to digital artistry.”</p>
+        </div>
+    </header>
+	<!-- ABOUT -->
+<section id="about" style="position: relative; width: 100%; height: 500px; overflow: hidden;">
+    <div style="
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('design.png') no-repeat center center;
+        background-size: cover;
+        filter: brightness(0.6); /* darken image for text readability */
+        z-index: 1;
+    "></div>
+
+    <div style="
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 0 24px;
+    ">
+        <p style="
+            color: #ffffff;
+            font-size: 1.5rem;
+            max-width: 800px;
+            line-height: 1.6;
+            font-weight: 400;
+        ">
+            <strong>EUNI ART</strong> is a creative hub for digital and traditional artists, offering tutorials, resources, and portfolio inspiration. Built for aspiring designers, freelancers, and young professionals, it’s a space where creativity meets practical tools, helping you learn, showcase, and grow in the world of art and design.
+        </p>
+    </div>
+</section>
+    <section class="cta-section">
+        <div class="container">
+           <h2 id="hero-title"><strong>Mission</strong></h2>
+            <p id="hero-description">EUNI ART’s mission is to empower artists worldwide by providing accessible tutorials, inspiring portfolio showcases, and high-quality downloadable resources.
+               We aim to bridge the gap between traditional and digital artistry, helping creatives of all levels learn, grow, and share their passion with the world.</p>
+                 <br>    
+	       <h2 id="hero-title"><strong>Vision</strong></h2>
+            <p id="hero-description">To become a global creative hub where aspiring designers, freelancers, and professionals find the tools, knowledge, and inspiration to thrive in the digital art space.
+               We envision EUNI ART as the go-to platform for learning, showcasing, and connecting within the creative community.</p>
+        </div>
+    </section>
+	
+	<!-- Gallery -->
+<section class="gallery-wrapper" style="display: flex;flex-direction: column;align-items: center;justify-content: center;min-height: 600px;background: none; padding: 40px 24px;">
+     <h2 style="text-align:center; font-size:32px; font-weight:400; color:#043915; margin-bottom:40px;">
+            Our Art Collection
+     </h2>
+    <div class="gallery-grid container" id="galleryGrid"></div>
+</section>
+    <!-- Gallery -->
+    <div class="gallery-grid container" id="galleryGrid"></div>
+    <!-- CTA Buttons -->
+    <section class="cta-section">
+        <div class="container">
+            <button class="cta-button" id="ctaButton">View Full Portfolio</button>
+            <button class="cta-button" id="hideButton" style="display:none;">Hide Portfolio</button>
+        </div>
+    </section>
+    <!-- para mapindot yung image -->
+    <div id="lightboxOverlay"
+         style="display:none; position: fixed; top:0; left:0; width:100%; height:100%;
+                background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 9999;">
+        <div style="position: relative; max-width: 90%; max-height: 90%;">
+            <img id="lightboxImage" src="" alt="Artwork"
+                 style="max-width: 90vw; max-height: 90vh; width: auto; height: auto;
+                        display: block; border-radius: 8px; object-fit: contain; transition: transform 0.3s ease;">
+            <button id="lightboxClose"
+                    style="position:absolute; top:-16px; right:-16px; background:#fff; border:none;
+                           border-radius:50%; width:32px; height:32px; font-size: 20px;
+                           cursor:pointer; font-weight:bold; line-height:32px;">×</button>
+        </div>
+    </div>
+<!-- Why not us, girl????????????? -->
+<section id="why-choose-us" style="padding: 60px 24px; background: #f8fff8;">
+    <div class="container">
+        <h2 style="text-align:center; font-size:32px; font-weight:400; color:#043915; margin-bottom:40px;">
+            Why Should You Choose Us
+        </h2>
+        <p style="text-align:center; font-size:18px; color:#043915; margin-bottom:40px; max-width:900px; margin-left:auto; margin-right:auto;">
+            Unlike other platforms that focus solely on tutorials or paid resources, <strong>EUNI ART</strong> stands out by combining education, inspiration, and free tools in one place.
+        </p>
+
+        <div style="overflow-x:auto;">
+            <table style="width:100%; max-width:1100px; margin:0 auto; border-collapse:collapse; background:#043915; color:#ffffff; border-radius:12px; overflow:hidden;">
+                <thead>
+                    <tr>
+                        <th style="padding:1rem; text-align:left; border-right:1px solid #4C763B;">Competitor Focus</th>
+                        <th style="padding:1rem; text-align:left; border-right:1px solid #4C763B;">What They Offer</th>
+                        <th style="padding:1rem; text-align:left;">EUNI ART Advantage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background:#ffffff; color:#043915;">
+                        <td style="padding:1rem; border-right:1px solid #4C763B;">YouTube Creators</td>
+                        <td style="padding:1rem; border-right:1px solid #4C763B;">Free tutorials, but scattered and inconsistent</td>
+                        <td style="padding:1rem;">Structured lessons + curated resources</td>
+                    </tr>
+                    <tr style="background:#f0fff0; color:#043915;">
+                        <td style="padding:1rem; border-right:1px solid #4C763B;">Design Marketplaces</td>
+                        <td style="padding:1rem; border-right:1px solid #4C763B;">Paid brushes/templates</td>
+                        <td style="padding:1rem;">Free starter packs + premium upgrades</td>
+                    </tr>
+                    <tr style="background:#ffffff; color:#043915;">
+                        <td style="padding:1rem; border-right:1px solid #4C763B;">Portfolio Sites (Behance, Dribbble)</td>
+                        <td style="padding:1rem; border-right:1px solid #4C763B;">Showcase only</td>
+                        <td style="padding:1rem;">Showcase + tutorials + resources</td>
+                    </tr>
+                    <tr style="background:#f0fff0; color:#043915;">
+                        <td style="padding:1rem; border-right:1px solid #4C763B;">Art Forums</td>
+                        <td style="padding:1rem; border-right:1px solid #4C763B;">Community engagement</td>
+                        <td style="padding:1rem;">Community + professional-quality resources</td>
+                    </tr>
+                </tbody>
+            </table>
+			<br>
+			<br>
+			<h3 style="text-align:center;"><strong>EUNI ART Advantage:</strong></h3>
+<ul style="text-align:center;">
+<li>Integrated learning + showcasing for career growth</li>
+<li>Strong social media presence with interactive content</li>
+<li>Dual focus on traditional and digital art</li>
+<li>Free resources to attract and build trust</li>
+</ul>
+        </div>
+    </div>
+</section>
+
+<!-- Pricing -->
+<section id="pricing">
+<div class="container">
+<h2 id="prices-heading">Our Pricing</h2>
+<div class="pricing-table-wrapper">
+<table class="pricing-table">
+<thead>
+<tr>
+<th>Tier</th>
+<th>Price</th>
+<th>Best For</th>
+<th>Key Features</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Starter</strong></td>
+<td>$20–$50</td>
+<td>Beginners, students</td>
+<td>
+    <ul>
+        <li><strong>Basic tutorials</strong></li>
+        <li>Free starter brushes/template</li>
+        <li>Portfolio inspiration</li>
+        <li>Community access</li>
+    </ul>
+</td>
+</tr>
+<tr>
+<td><strong>Professional</strong></td>
+<td>$80–$150</td>
+<td>Freelancers, aspiring designers</td>
+<td>
+    <ul>
+        <li><strong>Advanced tutorials</strong></li>
+        <li>Premium resources</li>
+        <li>Portfolio feedback</li>
+        <li><Contest priority</li>
+        <li>Commission discounts</li>
+    </ul>
+</td>
+
+</tr>
+<tr>
+<td><strong>Elite</strong></td>
+<td>$250–$500</td>
+<td>Professionals, serious creatives</td>
+<td>
+    <ul>
+        <li><strong>1-on-1 mentorship</strong></li>
+        <li>Custom commissions</li>
+        <li>Exclusive bundles</li>
+        <li>Showcase feature</li>
+        <li>VIP perks</li>
+    </ul>
+</td>
+
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+
+    <!-- Contact -->
+    <section id="contact">
+        <div class="container">
+            <h2 id="contact-heading">Get In Touch</h2>
+
+            <form class="contact-form" id="contact-form">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Send Message</button>
+
+                <div class="success-message" id="success-message">
+                    Thank you! Your message has been sent successfully.
+                </div>
+            </form>
+        </div>
+    </section>
+
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <p class="contact-text" id="contactText">eunimilm@gmail.com | +64 9657310204</p>
+    </div>
+</footer>
+
+<script>
+const totalArtworks = 57;
+const initialVisible = 8;
+
+// List of images that are .jpeg instead of .jpg
+const jpegNumbers = [2, 3, 48, 49, 50, 51, 52, 53, 54, 55];
+
+function getImageSrc(i) {
+    return jpegNumbers.includes(i) ? `${i}.jpeg` : `${i}.jpg`;
+}
+
+function initializeGallery() {
+    const galleryGrid = document.getElementById('galleryGrid');
+    galleryGrid.innerHTML = "";
+
+    for (let i = 1; i <= totalArtworks; i++) {
+        const card = document.createElement('div');
+        card.className = 'artwork-card';
+
+        if (i > initialVisible) card.style.display = 'none';
+
+        const img = document.createElement('img');
+        img.src = getImageSrc(i);
+        img.alt = `Artwork ${i}`;
+        img.style.width = "100%";
+        img.style.height = "100%";
+        img.style.objectFit = "cover";
+
+        card.appendChild(img);
+        galleryGrid.appendChild(card);
+    }
+}
+
+function attachLightbox() {
+    const lightboxOverlay = document.getElementById('lightboxOverlay');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxClose = document.getElementById('lightboxClose');
+    const allImages = document.querySelectorAll('.artwork-card img');
+
+    allImages.forEach(img => {
+        img.onclick = () => {
+            lightboxImage.src = img.src;
+            lightboxOverlay.style.display = 'flex';
+            lightboxOverlay.style.opacity = 0;
+            lightboxImage.style.transform = 'scale(0.8)';
+
+            setTimeout(() => {
+                lightboxOverlay.style.transition = 'opacity 0.3s ease';
+                lightboxOverlay.style.opacity = 1;
+                lightboxImage.style.transition = 'transform 0.3s ease';
+                lightboxImage.style.transform = 'scale(1)';
+            }, 10);
+        };
+    });
+
+    function closeLightbox() {
+        lightboxOverlay.style.opacity = 0;
+        lightboxImage.style.transform = 'scale(0.8)';
+        setTimeout(() => (lightboxOverlay.style.display = 'none'), 300);
+    }
+
+    lightboxClose.onclick = closeLightbox;
+    lightboxOverlay.onclick = (e) => { if (e.target === lightboxOverlay) closeLightbox(); };
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    initializeGallery();
+    attachLightbox();
+
+    const viewButton = document.getElementById('ctaButton');
+    const hideButton = document.getElementById('hideButton');
+
+    viewButton.addEventListener('click', () => {
+        document.querySelectorAll('.artwork-card').forEach(card => card.style.display = 'block');
+        viewButton.style.display = 'none';
+        hideButton.style.display = 'inline-block';
+        attachLightbox();
+    });
+
+    hideButton.addEventListener('click', () => {
+        document.querySelectorAll('.artwork-card').forEach((card, index) => {
+            if (index >= initialVisible) card.style.display = 'none';
+        });
+        hideButton.style.display = 'none';
+        viewButton.style.display = 'inline-block';
+    });
+});
+</script>
+
+
+</body>
+</html>
