@@ -316,32 +316,63 @@ textarea {resize: vertical;min-height: 150px;}
         <p class="contact-text" id="contactText">eunimilm@gmail.com | +64 9657310204</p>
     </div>
 </footer>
-<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <script>
-  (function() {
-    emailjs.init("m5SJXzeZZLdZCC2ss");
+	
+// Dropdown toggle for click
+document.addEventListener("DOMContentLoaded", () => {
+  const toggle = document.querySelector(".dropdown-toggle");
+  const dropdown = document.querySelector(".dropdown");
+
+  toggle.addEventListener("click", (e) => {
+    e.stopPropagation();
+    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+  });
+
+  // Close dropdown if clicking outside
+  document.addEventListener("click", () => {
+    dropdown.style.display = "none";
+  });
+});
+    emailjs.init("m5SJXzeZZLdZCC2ss"); // Your Public Key
 
     document.getElementById("contactForm").addEventListener("submit", function(e) {
-      e.preventDefault();
+        e.preventDefault();
 
-      const formData = {
-        name: this.name.value,
-        email: this.email.value,
-        message: this.message.value,
-        company: "University of Rizal System"
-      };
+        // Collect form data
+        const formData = {
+            name: this.name.value,
+            email: this.email.value,
+            message: this.message.value,
+            company: "University of Rizal System" // fixed value for [Company Name]
+        };
 
-      emailjs.send("service_7lwcg4o", "template_y9lm1yi", formData)
-        .then(() => {
-          alert("Your message has been sent!");
-          this.reset();
-        })
-        .catch((error) => {
-          console.error("EmailJS error:", error);
-          alert("Failed to send message. Check console for details.");
-        });
+        emailjs.send("service_7lwcg4o", "template_y9lm1yi", formData)
+            .then(() => {
+                alert("Your message has been sent!");
+                this.reset();
+            })
+            .catch((error) => {
+                console.error("EmailJS error:", error);
+                alert("Failed to send message. Check console for details.");
+            });
     });
-  })();
+    /* SAME HAMBURGER SCRIPT */
+    const hamburger = document.getElementById("hamburger");
+    const navMenu = document.getElementById("nav-menu");
+
+    hamburger.addEventListener("click", () => {
+      hamburger.classList.toggle("active");
+      navMenu.classList.toggle("active");
+    });
+
+    document.querySelectorAll(".nav-menu a").forEach(link => {
+      link.addEventListener("click", () => {
+        hamburger.classList.remove("active");
+        navMenu.classList.remove("active");
+      });
+    });
+
 </script>
 <script>
 const totalArtworks = 57;
